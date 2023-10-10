@@ -4,8 +4,8 @@ import numpy as np
 import cv2
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from io import BytesIO
-from PIL import Image
+# from io import BytesIO
+# from PIL import Image
 
 app = FastAPI()
 
@@ -26,7 +26,8 @@ async def root():
 @app.post('/photo-value/')
 async def photoValue(file:UploadFile):
     image_data = await file.read()
-    img = Image.open(BytesIO(image_data))
+    # img = Image.open(BytesIO(image_data))
+    img = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)
     img_array = np.array(img)
     # คำนวณปริมาณของสีแต่ละสีในภาพ
     red_mean = np.mean(img_array[:, :, 0])  # สีแดง
@@ -63,7 +64,8 @@ def compute_histogram(image_np):
 @app.post('/photo-hist-data/')
 async def photoHistData(file: UploadFile):
     image_bytes = await file.read()
-    image_np = np.array(Image.open(BytesIO(image_bytes)))
+    # image_np = np.array(Image.open(BytesIO(image_bytes)))
+    image_np = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_COLOR)
     
     result = {
         "grayscale": compute_histogram(image_np),
