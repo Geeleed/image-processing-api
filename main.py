@@ -4,6 +4,8 @@ import numpy as np
 import cv2
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from io import BytesIO
+from PIL import Image
 
 app = FastAPI()
 
