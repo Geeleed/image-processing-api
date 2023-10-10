@@ -1,6 +1,6 @@
 # คำสั่งเปิดเซิฟเวอร์ uvicorn main:app --port 8003 --reload
 
-# import numpy as np
+import numpy as np
 # import cv2
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
